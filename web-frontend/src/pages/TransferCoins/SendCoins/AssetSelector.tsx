@@ -9,10 +9,8 @@ import {
 import { useParams } from 'react-router-dom';
 
 import { useResource } from '@/custom/api';
-import { useFTTransfer } from '@/custom/smart-contract/useFTTransfer';
 import Intl from '@/i18n/i18n';
 import { Asset } from '@/models/AssetModel';
-import { symbolDict } from '@/utils/tokenIcon';
 
 interface AssetSelectorProps {
   selectedAsset: Asset | undefined;
@@ -23,7 +21,6 @@ interface AssetSelectorProps {
 export function AssetSelector(props: AssetSelectorProps) {
   const { selectedAsset, setSelectedAsset, selectSymbol } = props;
   const { nickname } = useParams();
-  const { isMainnet } = useFTTransfer();
 
   const { data: assets, isLoading: isAssetsLoading } = useResource<Asset[]>(
     `accounts/${nickname}/assets`,
@@ -60,12 +57,7 @@ export function AssetSelector(props: AssetSelectorProps) {
             </p>
           </div>
         ),
-        icon: getAssetIcons(
-          symbolDict[asset.symbol as keyof typeof symbolDict],
-          true,
-          isMainnet,
-          28,
-        ),
+        icon: getAssetIcons(asset.symbol, undefined, true, 32),
         onClick: () => setSelectedAsset(asset),
       };
     });

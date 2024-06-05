@@ -206,7 +206,10 @@ function useWriteSmartContract(client?: Client, isMainnet?: boolean) {
               />
             </ToastContent>
           ));
-          logSmartContractEvents(client, operationId);
+          logSmartContractEvents(
+            client as unknown as import('/Users/nathanmassa/dev/Ui-Kit/node_modules/@massalabs/massa-web3/dist/esm/web3/Client').Client,
+            operationId,
+          );
         } else {
           toast.error((t) => (
             <ToastContent t={t}>

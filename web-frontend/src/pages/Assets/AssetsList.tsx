@@ -2,11 +2,9 @@ import { useState } from 'react';
 
 import { Token, getAssetIcons } from '@massalabs/react-ui-kit';
 
-import { useFTTransfer } from '@/custom/smart-contract/useFTTransfer';
 import Intl from '@/i18n/i18n';
 import { Asset } from '@/models/AssetModel';
 import { DeleteAssetModal } from '@/pages/Assets/DeleteAssets';
-import { symbolDict } from '@/utils/tokenIcon';
 
 interface AssetsListProps {
   assets: Asset[] | undefined;
@@ -23,20 +21,13 @@ export function AssetsList(props: AssetsListProps) {
     setModal(true);
   }
 
-  const { isMainnet } = useFTTransfer();
-
   return (
     <>
       {assets
         ?.filter((a) => a.balance !== undefined && a.balance !== '')
         .map((token: Asset, index: number) => (
           <Token
-            logo={getAssetIcons(
-              symbolDict[token.symbol as keyof typeof symbolDict],
-              true,
-              isMainnet,
-              32,
-            )}
+            logo={getAssetIcons(token.symbol, undefined, true, 32)}
             name={token.name}
             symbol={token.symbol}
             decimals={token.decimals}
